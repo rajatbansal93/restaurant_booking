@@ -1,0 +1,13 @@
+default_options: &default_options
+  adapter:  postgresql
+  encoding: utf8
+  username:
+  password:
+  pool: 5
+  host:
+  timeout: 5000
+
+development:
+  <<: *default_options
+  database: restaurant_booking
+
