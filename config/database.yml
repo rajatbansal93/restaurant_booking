@@ -16,7 +16,7 @@ test:
   database: test_restaurant_booking
 
 production:
-  <<: *default
+  <<: *default_options
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: myapp_production
   username: myapp
