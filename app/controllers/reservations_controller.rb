@@ -1,6 +1,8 @@
 class ReservationsController < ApplicationController
   before_action :load_reservation, except: [:index, :create]
   before_action :load_guest, only: :create
+  before_action :validate_table, only: :create
+  before_action :validate_shift, only: :create
 
   def index
     respond_to do |format|
@@ -54,5 +56,16 @@ class ReservationsController < ApplicationController
 
     def load_guest
       @guest = Guest.find_by(email: params[:email])
+      render json: { message: "No Such user exists" } and return unless @guest
+    end
+
+    def validate_table
+      @table = Table.find_by(id: params[:reservation][:table_id])
+      render json: { message: "No Such table at any restaurant exists" } and return unless @table
+    end
+
+    def validate_shift
+      @shift = @table.restaurant.shifts.find_by_name(params[:reservation][:shift])
+      render json: { message: "No Such shift exists" } and return unless @shift
     end
 end
