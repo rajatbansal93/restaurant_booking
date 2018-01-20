@@ -5,13 +5,13 @@ class Restaurant < ApplicationRecord
 
   # Associations
   has_many :shifts, dependent: :destroy
-  has_many :tables
+  has_many :tables, dependent: :destroy
 
   # Validations
   validates :name, :email, :phone, presence: true
   validates_format_of :email, with: EMAIL_REGEXP, allow_blank: true
   validates_format_of :phone, with: PHONE_REGEXP, allow_blank: true
-  validates :email, uniqueness: true, allow_blank: true, case_sensitive: false
+  validates :email, uniqueness: { case_sensitive: false }, allow_blank: true
   validates_associated :shifts
 
   accepts_nested_attributes_for :shifts
