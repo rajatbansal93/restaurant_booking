@@ -5,6 +5,7 @@ class Reservation < ApplicationRecord
   validates :guest_count, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true
   validate :future_time, if: [:time]
   validate :validate_time, if: [:time]
+  validate :validate_guest_count, if: [:guest_count]
 
   # Associations
   belongs_to :table
@@ -12,22 +13,28 @@ class Reservation < ApplicationRecord
 
   delegate :restaurant, to: :table
 
-  # private
+  private
+    def validate_guest_count
+      if guest_count > table.max_guest || guest_count < table.min_guest
+        errors.add(:guest_count, "Invalid Guest Number!!")
+      end
+    end
+
     def future_time
-      errors.add(:base, "Invalid Time!! Enter future time") if time < Time.nowr
+      errors.add(:time, "Invalid Time!! Enter future time") if time < Time.current
     end
 
     def validate_time
       if time > time_of_reservation_day(:closing_time) || time < time_of_reservation_day(:opening_time)
-        errors.add(:base, "Invalid Time!! Please enter time in between restaurant opening and closing time")
+        errors.add(:time, "Invalid Time!! Please enter time in between restaurant opening and closing time")
       end
     end
 
     def time_of_reservation_day(key)
-      restaurant_timins[key] + ( time.beginning_of_day - restaurant_timins[key].beginning_of_day )
+      restaurant_timings[key] + ( time.beginning_of_day - restaurant_timings[key].beginning_of_day )
     end
 
-    def restaurant_timins
+    def restaurant_timings
       timings ||= restaurant.timings(shift)
     end
 end

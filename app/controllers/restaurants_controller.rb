@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render json: Restaurant.all, include: :shifts }
+      format.json { render json: Restaurant.all, include: [:shifts, :tables] }
     end
   end
 

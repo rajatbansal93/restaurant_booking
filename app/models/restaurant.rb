@@ -5,6 +5,7 @@ class Restaurant < ApplicationRecord
 
   # Associations
   has_many :shifts, dependent: :destroy
+  has_many :tables
 
   # Validations
   validates :name, :email, :phone, presence: true
