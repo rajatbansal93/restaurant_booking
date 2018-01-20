@@ -3,7 +3,7 @@ default_options: &default_options
   encoding: utf8
   username:
   password:
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   timeout: 5000
 
