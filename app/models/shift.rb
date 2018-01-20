@@ -2,7 +2,7 @@ class Shift < ApplicationRecord
 
   # Validations
   validates :name, :opening_time, :closing_time, presence: true
-  validates :name, uniqueness: { scope: :restaurant }
+  validates :name, uniqueness: { scope: :restaurant_id, case_sensitive: false }
   validate :closing_time_greater_than_opening_time, if: [:opening_time, :closing_time]
 
   # Associations

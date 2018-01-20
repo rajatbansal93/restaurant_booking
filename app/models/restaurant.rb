@@ -11,6 +11,7 @@ class Restaurant < ApplicationRecord
   validates :name, :email, :phone, presence: true
   validates_format_of :email, with: EMAIL_REGEXP, allow_blank: true
   validates_format_of :phone, with: PHONE_REGEXP, allow_blank: true
+  validates :email, uniqueness: true, allow_blank: true, case_sensitive: false
   validates_associated :shifts
 
   accepts_nested_attributes_for :shifts

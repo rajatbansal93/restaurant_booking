@@ -13,6 +13,10 @@ class Reservation < ApplicationRecord
 
   delegate :restaurant, to: :table
 
+  #Callbacks
+  after_create :notify_new_reservation
+  after_update :notify_updated_reservation
+
   private
     def validate_guest_count
       if guest_count > table.max_guest || guest_count < table.min_guest
@@ -36,5 +40,15 @@ class Reservation < ApplicationRecord
 
     def restaurant_timings
       timings ||= restaurant.timings(shift)
+    end
+
+    def notify_new_reservation
+      RestaurantMailer.notify_restaurant_new_reservation(restaurant, self).deliver_now
+      GuestMailer.notify_reservation_confirmation(guest, self).deliver_now
+    end
+
+    def notify_updated_reservation
+      RestaurantMailer.notify_restaurant_updated_reservation(restaurant, self).deliver_now
+      GuestMailer.notify_reservation_updation(guest, self).deliver_now
     end
 end

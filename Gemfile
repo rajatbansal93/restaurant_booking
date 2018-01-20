@@ -30,5 +30,9 @@ end
 group :development, :test do
   gem 'byebug',                             platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara',                 '~> 2.13'
+  gem 'rspec-rails',              '>= 3.4.2'
   gem 'selenium-webdriver'
+  gem 'shoulda-callback-matchers', '>= 1.1.4'
+  gem 'shoulda-matchers',          '>= 3.1.2'
+  gem 'factory_bot',              '>= 4.8.2'
 end

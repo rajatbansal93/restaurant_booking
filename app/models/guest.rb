@@ -6,6 +6,7 @@ class Guest < ApplicationRecord
   has_many :reservations, dependent: :destroy
 
   validates :name, :email, presence: true
+  validates :email, uniqueness: true, allow_blank: true, case_sensitive: false
   validates_format_of :email, with: EMAIL_REGEXP, allow_blank: true
 
 end
