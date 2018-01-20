@@ -20,6 +20,7 @@ gem 'tzinfo-data',                           platforms: [:mingw, :mswin, :x64_mi
 gem 'uglifier',                   '>= 1.3.0'
 
 group :development do
+  gem 'letter_opener',            '~> 1.6'
   gem 'listen',                   '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen',    '~> 2.0.0'
