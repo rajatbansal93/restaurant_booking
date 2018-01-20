@@ -1,7 +1,7 @@
 class Restaurant < ApplicationRecord
 
   EMAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  PHONE_REGEXP = /\d{3}-\d{3}-\d{4}/
+  PHONE_REGEXP = /\A[\d{3}]{3,8}\z/
 
   # Validations
   validates :name, :email, :phone, presence: true
@@ -10,4 +10,9 @@ class Restaurant < ApplicationRecord
 
   # Associations
   has_many :shifts, dependent: :destroy
+
+  def timings(shift_name)
+    shift = shifts.find_by_name(shift_name)
+    shift.present? ? { opening_time: shift.opening_time, closing_time: shift.closing_time } : nil
+  end
 end

@@ -1,10 +1,10 @@
 class Table < ApplicationRecord
 
   # Validations
-  validates :name, :min_gues, :max_guest, presence: true
-  validates_format_of :email, with: EMAIL_REGEXP, allow_blank: true
-  validates_format_of :phone, with: PHONE_REGEXP, allow_blank: true
+  validates :name, :min_guest, :max_guest, presence: true
+  validates :min_guest, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true
+  validates :max_guest, numericality: { only_integer: true, greater_than: :min_guest }, allow_blank: true
 
   # Associations
-  has_many :shifts, dependent: :destroy
+  belongs_to :restaurant
 end

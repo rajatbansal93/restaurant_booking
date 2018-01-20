@@ -4,7 +4,7 @@ class CreateTables < ActiveRecord::Migration[5.1]
       t.string :name
       t.integer :min_guest
       t.integer :max_guest
-      t.belongs_to :restaurants, index: true
+      t.belongs_to :restaurant, index: true
 
       t.timestamps null: false
     end

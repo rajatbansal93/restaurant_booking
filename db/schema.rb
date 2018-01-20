@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180120050849) do
+ActiveRecord::Schema.define(version: 20180120063729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,10 +25,11 @@ ActiveRecord::Schema.define(version: 20180120050849) do
   create_table "reservations", force: :cascade do |t|
     t.datetime "time"
     t.integer "guest_count"
-    t.bigint "tables_id"
-    t.bigint "guests_id"
-    t.index ["guests_id"], name: "index_reservations_on_guests_id"
-    t.index ["tables_id"], name: "index_reservations_on_tables_id"
+    t.bigint "table_id"
+    t.bigint "guest_id"
+    t.string "shift"
+    t.index ["guest_id"], name: "index_reservations_on_guest_id"
+    t.index ["table_id"], name: "index_reservations_on_table_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -40,23 +41,23 @@ ActiveRecord::Schema.define(version: 20180120050849) do
   end
 
   create_table "shifts", force: :cascade do |t|
-    t.string "opening_time"
-    t.string "closing_time"
-    t.bigint "restaurants_id"
+    t.time "opening_time"
+    t.time "closing_time"
+    t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-    t.index ["restaurants_id"], name: "index_shifts_on_restaurants_id"
+    t.index ["restaurant_id"], name: "index_shifts_on_restaurant_id"
   end
 
   create_table "tables", force: :cascade do |t|
     t.string "name"
     t.integer "min_guest"
     t.integer "max_guest"
-    t.bigint "restaurants_id"
+    t.bigint "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["restaurants_id"], name: "index_tables_on_restaurants_id"
+    t.index ["restaurant_id"], name: "index_tables_on_restaurant_id"
   end
 
 end
