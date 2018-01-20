@@ -43,7 +43,6 @@ class GuestsController < ApplicationController
   private
 
     def guest_params
-      debugger
       params.require(:guest).permit(:name, :email)
     end
 
