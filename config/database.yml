@@ -3,7 +3,7 @@ default_options: &default_options
   encoding: utf8
   username:
   password:
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: 5
   host: localhost
   timeout: 5000
 
@@ -17,6 +17,7 @@ test:
 
 production:
   <<: *default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: myapp_production
   username: myapp
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
