@@ -1,8 +1,8 @@
 class ReservationsController < ApplicationController
   before_action :load_reservation, except: [:index, :create]
-  before_action :load_guest, only: :create
-  before_action :validate_table, only: :create
-  before_action :validate_shift, only: :create
+  before_action :load_guest, only: [:create, :update]
+  before_action :validate_table, only: [:create, :update]
+  before_action :validate_shift, only: [:create, :update]
 
   def index
     respond_to do |format|
