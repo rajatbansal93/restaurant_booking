@@ -13,8 +13,10 @@ class Restaurant < ApplicationRecord
   validates_format_of :phone, with: PHONE_REGEXP, allow_blank: true
   validates :email, uniqueness: { case_sensitive: false }, allow_blank: true
   validates_associated :shifts
+  validates_associated :tables
 
   accepts_nested_attributes_for :shifts
+  accepts_nested_attributes_for :tables
 
   def timings(shift_name)
     shift = shifts.find_by_name(shift_name)
