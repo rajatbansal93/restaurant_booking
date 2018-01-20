@@ -1,5 +1,5 @@
 class GuestsController < ApplicationController
-  before_action :load_guest, except: :index
+  before_action :load_guest, except: [:index, :create]
 
   def index
     respond_to do |format|
@@ -23,10 +23,6 @@ class GuestsController < ApplicationController
     end
   end
 
-  def edit
-    render json: @guest
-  end
-
   def update
     if @guest.update(guest_params)
       render json: @guest, status: :ok
@@ -47,6 +43,11 @@ class GuestsController < ApplicationController
   private
 
     def guest_params
+      debugger
       params.require(:guest).permit(:name, :email)
+    end
+
+    def load_guest
+      @guest = Guest.find(params[:id])
     end
 end
