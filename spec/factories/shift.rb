@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :shift do
     name "morning"
-    opening_time Time.current - 3.hours
-    closing_time  Time.current + 3.hours
+    opening_time { "9 AM" }
+    closing_time { "12 PM" }
 
-  association :restaurant, factory: :restaurant
+    association :restaurant, factory: :restaurant
   end
 end

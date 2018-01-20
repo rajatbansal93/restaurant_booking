@@ -23,16 +23,15 @@ RSpec.describe Shift, type: :model do
   end
 
   describe 'Validations' do
-    let(:subject) { create(:shift) }
+    let(:subject) { build(:shift) }
 
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:opening_time) }
     it { is_expected.to validate_presence_of(:closing_time) }
     it { is_expected.to validate_uniqueness_of(:name).scoped_to(:restaurant_id).case_insensitive }
 
-    let(:invalid_shift) { build(:shift, opening_time: Time.current + 2.hours, closing_time: Time.current) }
+    let(:invalid_shift) { build(:shift, name: "morning", opening_time: "9 PM", closing_time: "12 PM") }
 
     it { expect(invalid_shift.valid?).to be_falsey }
   end
-
 end

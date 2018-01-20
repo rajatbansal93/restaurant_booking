@@ -14,12 +14,16 @@ RSpec.describe Reservation, type: :model do
   end
 
   describe 'Associations' do
-    it { is_expected.to have_many(:table) }
-    it { is_expected.to have_many(:guest) }
+    it { is_expected.to belong_to(:table) }
+    it { is_expected.to belong_to(:guest) }
   end
 
   describe 'Validations' do
-    let(:subject) { create(:restaurant) }
+    let!(:guest) { create(:guest) }
+    let!(:shift) { create(:shift, opening_time: "9 AM", closing_time: "12 PM") }
+    let!(:restaurant) { shift.restaurant }
+    let!(:table) { create(:table, restaurant: restaurant) }
+    let!(:subject) { create(:reservation, guest: guest, table: table, time: "12-08-2056 11 AM") }
 
     it { is_expected.to validate_presence_of(:time) }
     it { is_expected.to validate_presence_of(:table) }
@@ -27,7 +31,20 @@ RSpec.describe Reservation, type: :model do
     it { is_expected.to validate_presence_of(:shift) }
     it { is_expected.to validate_numericality_of(:guest_count).only_integer.is_greater_than(0) }
 
-  end
+    describe "when time is of past" do
+      let(:reservation) { build(:reservation, guest: guest, table: table, time: "12-08-2009 11 AM") }
+      it "return false" do
+        expect(reservation.valid?).to be false
+      end
+    end
 
+    describe "when guest count is not valid" do
+      let(:reservation) { build(:reservation, guest: guest, table: table, time: "12-08-2059 11 AM", guest_count: 100) }
+      it "return false" do
+        reservation.valid?
+        expect(reservation.errors[:guest_count]).to eq(["Invalid Guest Number!!"])
+      end
+    end
+  end
 
 end

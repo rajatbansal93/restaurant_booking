@@ -5,6 +5,8 @@ class CreateReservations < ActiveRecord::Migration[5.1]
       t.integer :guest_count
       t.belongs_to :table, index: true
       t.belongs_to :guest, index: true
+
+      t.timestamps null: false
     end
   end
 end

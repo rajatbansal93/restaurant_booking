@@ -30,6 +30,7 @@ end
 group :development, :test do
   gem 'byebug',                             platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara',                 '~> 2.13'
+  gem 'database_cleaner',         '>= 1.6.2'
   gem 'rspec-rails',              '>= 3.4.2'
   gem 'selenium-webdriver'
   gem 'shoulda-callback-matchers', '>= 1.1.4'

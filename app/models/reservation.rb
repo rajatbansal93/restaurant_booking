@@ -4,8 +4,8 @@ class Reservation < ApplicationRecord
   validates :guest_count, :time, :table, :guest, :shift, presence: true
   validates :guest_count, numericality: { only_integer: true, greater_than: 0 }, allow_blank: true
   validate :future_time, if: [:time]
-  validate :validate_time, if: [:time]
-  validate :validate_guest_count, if: [:guest_count]
+  validate :validate_time, if: [:time, :table, :shift]
+  validate :validate_guest_count, if: [:guest_count, :table, :shift]
 
   # Associations
   belongs_to :table
