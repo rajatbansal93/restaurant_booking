@@ -14,3 +14,9 @@ development:
 test:
   <<: *default_options
   database: test_restaurant_booking
+
+production:
+  <<: *default
+  database: myapp_production
+  username: myapp
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
